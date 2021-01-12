@@ -1,0 +1,2 @@
+include versioneer.py
+include gbm_kitty/_version.py
