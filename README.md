@@ -1,6 +1,15 @@
-![CI](https://github.com/grburgess/gbm_kitty/workflows/CI/badge.svg?branch=master)
-# gbm kitty
+<div  >
+<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/logo.png" alt="drawing" width="600" align="left"/>
+<header >
+  <h1>
+   <p style="color:#A233FF;"> GBM Kitty </p>
+  </h1>
+</header>
 
-![alt text](https://raw.githubusercontent.com/grburgess/gbm_kitty/master/logo.png)
+Database, reduce, and analyze GBM data without having to know anything. Curisoty killed the catalog. 
 
-A Fermi-GBM Catalog and Analysis Generator
+</div>
+
+## What is this?
+
+Creates a MongoDB database of GRBs observed by GBM. Heuristic algorithms are applied to search for the background regions in the time series 
