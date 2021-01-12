@@ -5,8 +5,8 @@ from pathlib import Path
 structure = {}
 
 structure["luigi"] = dict(n_workers=4)
-structure["database"] = Path("~/.gbm_kitty/database").expanduser()
-
+structure["database"] = str(Path("~/.gbm_kitty/database").expanduser())
+structure["selections"] = dict(tstart=-40, tstop=400, dt=0.25, min_sig=5, max_time=300)
 
 
 class GBMKittyConfig(YAMLConfig):

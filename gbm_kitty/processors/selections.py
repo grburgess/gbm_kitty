@@ -6,6 +6,8 @@ import ruptures as rpt
 from joblib import Parallel, delayed
 from threeML.utils.statistics.stats_tools import Significance
 from threeML.utils.time_series.polynomial import polyfit
+from threeML import update_logging_level
+from gbm_kitty.utils.configuration import gbm_kitty_config
 
 
 class AutoSelect(object):
@@ -45,6 +47,11 @@ class AutoSelect(object):
     def selections(self):
         return self._selections
 
+
+    @property
+    def brightest_det(self):
+        return self._brightest_det
+    
     def _compute_primary_bkg_selection(self):
 
         # number of sub divisions
@@ -71,17 +78,20 @@ class AutoSelect(object):
 
             def fit_backgrounds(i):
 
+                update_logging_level("CRITICAL")
                 # selections
 
                 s1 = x < np.max([-i*.1, x.min() + 10])
-                s1 = x > i
+                s2 = x > i
 
                 idx = s1 | s2
 
                 # fit background
 
-                _, ll = polyfit(x[idx], y[idx], grade=2,
+                _, ll = polyfit(x[idx], y[idx], grade=3,
                                 exposure=exposure[idx])
+
+                return ll
 
             # continuosly increase the starting of the bkg
             # selections and store the log likelihood
@@ -116,12 +126,22 @@ class AutoSelect(object):
         algo = rpt.Pelt().fit(angles)
         cpts_seg = algo.predict(pen=penalty)
 
-        algo = rpt.Pelt().fit(dist)
-        cpts_seg2 = algo.predict(pen=penalty)
+        # algo = rpt.Pelt().fit(dist)
+        # cpts_seg2 = algo.predict(pen=penalty)
 
-        # take the maximum last change point
+        algo = rpt.Pelt().fit(dist/dist.max())
+        cpts_seg2 = algo.predict(pen=.01)
 
-        best_range = np.max([cpts_seg[-2], cpts_seg2[-2]])
+        tol = 1E-2
+        best_range = len(dist)
+        while (best_range >= len(dist)-1) and (tol < 1):
+            for i in cpts_seg2:
+                best_range = i
+
+                if np.alltrue(np.abs(np.diff(dist/dist.max())[i:]) < tol):
+
+                    break
+                tol += 1e-2
 
         time = np.linspace(1, self._max_time, n_trials)[best_range+1]
 
@@ -129,7 +149,7 @@ class AutoSelect(object):
         # and fit a polynomial to
         # each light curve and save it
 
-        pre = - time*.1
+        pre = np.max([-time*.1, x.min() + 10])
         post = time
 
         # create polys
@@ -144,7 +164,7 @@ class AutoSelect(object):
 
             idx = (x < pre) | (x > post)
 
-            p, ll = polyfit(x[idx], y[idx], grade=2, exposure=exposure[idx])
+            p, ll = polyfit(x[idx], y[idx], grade=3, exposure=exposure[idx])
 
             self._polys.append(p)
 
@@ -237,22 +257,30 @@ class AutoSelect(object):
         # grab all intervals with sigma greater
         # than 5
 
-        idx = self._significance[ii] > 5
+        self._brightest_det = ii
+        
+        idx = self._significance[ii] > gbm_kitty_config["selections"]["min_sig"]
 
-        select = slice_disjoint(np.where(idx)[0])
+        if idx.sum() == 0:
 
-        self._selections = []
+            self._selections = []
 
-        for s1, s2 in select:
+        else:
 
-            t = self._light_curves[ii].mean_times[self._all_change_points]
+            select = slice_disjoint(np.where(idx)[0])
 
-            t1 = t[s1-1]
-            t2 = t[s2-1]
+            self._selections = []
 
-            if t2-t1 > 1E-2:
+            for s1, s2 in select:
 
-                self._selections.append([t1, t2])
+                t = self._light_curves[ii].mean_times[self._all_change_points]
+
+                t1 = t[s1-1]
+                t2 = t[s2-1]
+
+                if t2-t1 > 1E-2:
+
+                    self._selections.append([t1, t2])
 
 
 def angle(x, ref_vector):
