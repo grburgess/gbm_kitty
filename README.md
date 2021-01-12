@@ -23,3 +23,20 @@ Database, reduce, and analyze GBM data without having to know anything. Curiosit
 
 Animal cruelty. 
 
+## What can you do?
+
+Assuming you have built a local database (tis possible), just type:
+
+```bash
+$> get_grb_analysis --grb GRBYYMMDDxxx
+
+```
+
+magic happens, and then you can look at your locally built GRB analysis notebook. 
+
+If you want to do more, go ahead and fit the spectra:
+
+```bash
+$> get_grb_analysis --grb GRBYYMMDDxxx --run-fit
+
+```
