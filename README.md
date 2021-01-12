@@ -6,7 +6,7 @@
   </h1>
 </header>
 
-Database, reduce, and analyze GBM data without having to know anything. Curisoty killed the catalog. 
+Database, reduce, and analyze GBM data without having to know anything. Curiosity killed the catalog. 
 
 <br/>
 </div>
