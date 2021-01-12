@@ -13,10 +13,30 @@ jupyter:
     name: python3
 ---
 
+<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/logo.png" alt="drawing" width="500" align="left"/>
+<div style="background-color:#A6A6A6" >
+
+<header >
+  <h1>
+   <p style="color:#A233FF;"> GRB Analysis via GBM Kitty </p>
+  </h1>
+
+
+</header>
+
+
+  <a target="blank" href="https://github.com/grburgess/gbm_kitty">See here for details</a>
+  <p style="color:#A233FF;">This analysis was automatically generated to make your life easier.</p>
+</div>
+
+
+
+<!-- #region heading_collapsed=true -->
 # Imports
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 # Scientific libraries
 import numpy as np
 
@@ -28,7 +48,7 @@ warnings.simplefilter("ignore")
 
 
 import matplotlib.pyplot as plt
-%matplotlib notebook
+%matplotlib inline
 
 
 silence_warnings()
@@ -36,38 +56,47 @@ update_logging_level("WARNING")
 
 ```
 
+<!-- #region heading_collapsed=true -->
 # Parameters
+<!-- #endregion -->
 
-```python tags=["parameters"]
+```python tags=["parameters"] hidden=true
 
 ```
 
+<!-- #region heading_collapsed=true -->
 # Examining the catalog
+<!-- #endregion -->
 
-```python
+```python hidden=true
 gbm_catalog = FermiGBMBurstCatalog()
 gbm_catalog.query_sources(grb_name)
 ```
 
+<!-- #region heading_collapsed=true -->
 # Data Setup
 
 
 
+<!-- #endregion -->
 
-
+<!-- #region hidden=true -->
 ## Connect to the data
 If the data is not present in the database, download it
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 download = download_GBM_trigger_data(grb_trigger,
                                   detectors=gbm_detectors,
                                   destination_directory=download_dir)
 ```
 
+<!-- #region hidden=true -->
 ## Setup the plugins
+<!-- #endregion -->
 
-```python
+```python hidden=true
 fluence_plugins = []
 time_series = {}
 
@@ -117,7 +146,7 @@ for det in gbm_detectors:
     fluence_plugins.append(fluence_plugin)
 ```
 
-```python
+```python hidden=true
 
 brightest_ts = time_series[brightest_det]
 brightest_ts.create_time_bins(src_start -5,
@@ -157,7 +186,7 @@ for k,v in time_series.items():
     time_resolved_plugins[k] = v.to_spectrumlike(from_bins=True)
 ```
 
-```python
+```python hidden=true
 
 ```
 
@@ -200,57 +229,68 @@ cpl_ps = PointSource(grb_name, ra=ra, dec=dec, spectral_shape=cpl)
 cpl_model = Model(cpl_ps)
 ```
 
+<!-- #region heading_collapsed=true -->
 # Fit
+<!-- #endregion -->
 
-
+<!-- #region heading_collapsed=true hidden=true -->
 ## Fluence
+<!-- #endregion -->
 
-
+<!-- #region hidden=true -->
 ### Band Fit
+<!-- #endregion -->
 
-```python
+```python hidden=true
 band_bayes = BayesianAnalysis(band_model, DataList(*fluence_plugins))
 band_bayes.set_sampler("multinest")
 band_bayes.sampler.setup(n_live_points=400, chain_name="chains/band_fit-")
 ```
 
-```python
+```python hidden=true
 if run_fits:
     band_bayes.sample()
     band_bayes.restore_median_fit()
     display_spectrum_model_counts(band_bayes, min_rate=20, step=False );
 ```
 
+<!-- #region hidden=true -->
 ### CPL Fit
+<!-- #endregion -->
 
-```python
+```python hidden=true
 cpl_bayes = BayesianAnalysis(cpl_model, DataList(*fluence_plugins))
 cpl_bayes.set_sampler("multinest")
 cpl_bayes.sampler.setup(n_live_points=400, chain_name="chains/cpl_fit-")
 ```
 
-```python
+```python hidden=true
 if run_fits:
     cpl_bayes.sample()
     cpl_bayes.restore_median_fit()
     display_spectrum_model_counts(cpl_bayes, min_rate=20, step=False );
 ```
 
+<!-- #region hidden=true -->
 ### Compare
+<!-- #endregion -->
 
-```python
+```python hidden=true
 if run_fits:
 	fig = plot_point_source_spectra(band_bayes, cpl_bayes.results, flux_unit='erg2/(cm2 s keV)');
 ```
 
+<!-- #region heading_collapsed=true hidden=true -->
 ## Time Resolved Analysis 
+<!-- #endregion -->
 
-
+<!-- #region heading_collapsed=true hidden=true -->
 ### Band Fit
 
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 if run_fits:
     band_models = []
     band_results = []
@@ -299,19 +339,23 @@ if run_fits:
         analysis.append(bayes)
 ```
 
+<!-- #region hidden=true -->
 #### Examine the fits
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 if run_fits:
     for a in band_analysis:
         a.restore_median_fit()
         display_spectrum_model_counts(a, step=False)
 ```
+<!-- #region hidden=true -->
 
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 if run_fits:
     plot_spectra(*[a.results for a in band_analysis[::1]],
                  flux_unit="erg2/(cm2 s keV)",
@@ -319,12 +363,13 @@ if run_fits:
                  contour_cmap='viridis',
                  contour_style_kwargs=dict(alpha=0.1));
 ```
-
+<!-- #region heading_collapsed=true hidden=true -->
 ### CPL Fit
 
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 if run_fits:
     cpl_models = []
     cpl_results = []
@@ -373,19 +418,23 @@ if run_fits:
         analysis.append(bayes)
 ```
 
+<!-- #region hidden=true -->
 #### Examine the fits
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 if run_fits:
     for a in cpl_analysis:
         a.restore_median_fit()
         display_spectrum_model_counts(a, step=False)
 ```
+<!-- #region hidden=true -->
 
 
+<!-- #endregion -->
 
-```python
+```python hidden=true
 if run_fits:
     plot_spectra(*[a.results for a in cpl_analysis[::1]],
                  flux_unit="erg2/(cm2 s keV)",
@@ -393,4 +442,6 @@ if run_fits:
                  contour_cmap='viridis',
                  contour_style_kwargs=dict(alpha=0.1));
 ```
+<!-- #region hidden=true -->
 
+<!-- #endregion -->
