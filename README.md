@@ -1,5 +1,5 @@
 <div  >
-<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/logo.png" alt="drawing" width="600" align="left"/>
+<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/logo.png" alt="drawing" width="500" align="left"/>
 <header >
   <h1>
    <p style="color:#A233FF;"> GBM Kitty </p>
@@ -9,6 +9,7 @@
 Database, reduce, and analyze GBM data without having to know anything. Curisoty killed the catalog. 
 
 </div>
+---
 
 ## What is this?
 
