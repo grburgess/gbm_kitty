@@ -7,13 +7,18 @@
 import mongoengine as moe
 
 
-
-
-
 class Selection(moe.Document):
 
     start = moe.ListField(moe.FloatField())
     stop = moe.ListField(moe.FloatField())
+
+
+class OfficialSelection(moe.Document):
+
+    name = moe.StringField(required=True)
+    background_selection = moe.DictField()
+    detectors = moe.ListField(moe.StringField(max_length=2), max_lenght=14)
+    selection = moe.ReferenceField(Selection)
 
 
 class GRB(moe.Document):
@@ -22,12 +27,11 @@ class GRB(moe.Document):
     date = moe.DateField()
     detectors = moe.ListField(moe.StringField(max_length=2), max_lenght=14)
     brightest_detector = moe.StringField(max_length=2)
-    
+
     background_selection = moe.ListField(moe.FloatField(), max_length=2)
 
     location = moe.ListField(moe.FloatField(), max_lenght=3)
 
     selection = moe.ReferenceField(Selection)
-
 
     data = moe.DictField()
