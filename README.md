@@ -44,6 +44,8 @@ $> get_grb_analysis --grb GRBYYMMDDxxx --run-fit
 
 ```
 
+<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/media/fit.gif" alt="drawing" width="800" align="center"/>
+
 
 ## Building the database
 
