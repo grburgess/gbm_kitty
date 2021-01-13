@@ -309,6 +309,8 @@ if run_fits:
         for k, v in time_resolved_plugins.items():
 
             pi = v[interval]
+			
+			pi.remove_rebinning()
 
             if k.startswith("b"):
                 pi.set_active_measurements("250-30000")
@@ -388,6 +390,9 @@ if run_fits:
         for k, v in time_resolved_plugins.items():
 
             pi = v[interval]
+			
+			pi.remove_rebinning()
+
 
             if k.startswith("b"):
                 pi.set_active_measurements("250-30000")
