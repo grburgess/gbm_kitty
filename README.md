@@ -49,4 +49,4 @@ The concept behind this is to query the Fermi GBM database for basic trigger inf
 This process starts with launching [luigi](https://luigi.readthedocs.io/en/stable/) which mangages the pipline:
 
 
-<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/logo.png" alt="drawing" width="600" align="center"/>
+<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/media/demo.png" alt="drawing" width="600" align="center"/>
