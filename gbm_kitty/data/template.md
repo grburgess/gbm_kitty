@@ -336,7 +336,7 @@ if run_fits:
         # disk but we will simply hold
         # onto them in memory
 
-        analysis.append(bayes)
+        band_analysis.append(bayes)
 ```
 
 <!-- #region hidden=true -->
@@ -415,7 +415,7 @@ if run_fits:
         # disk but we will simply hold
         # onto them in memory
 
-        analysis.append(bayes)
+        cpl_analysis.append(bayes)
 ```
 
 <!-- #region hidden=true -->
