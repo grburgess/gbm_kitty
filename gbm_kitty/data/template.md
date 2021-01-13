@@ -309,9 +309,8 @@ if run_fits:
         for k, v in time_resolved_plugins.items():
 
             pi = v[interval]
-			
-			pi.remove_rebinning()
-
+            pi.remove_rebinning()
+            
             if k.startswith("b"):
                 pi.set_active_measurements("250-30000")
             else:
@@ -341,7 +340,7 @@ if run_fits:
         band_analysis.append(bayes)
 ```
 
-<!-- #region hidden=true -->
+<!-- #region heading_collapsed=true hidden=true -->
 #### Examine the fits
 
 <!-- #endregion -->
@@ -390,9 +389,7 @@ if run_fits:
         for k, v in time_resolved_plugins.items():
 
             pi = v[interval]
-			
-			pi.remove_rebinning()
-
+            pi.remove_rebinning()
 
             if k.startswith("b"):
                 pi.set_active_measurements("250-30000")
