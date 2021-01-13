@@ -277,7 +277,7 @@ if run_fits:
 
 ```python hidden=true
 if run_fits:
-	fig = plot_point_source_spectra(band_bayes, cpl_bayes.results, flux_unit='erg2/(cm2 s keV)');
+	fig = plot_point_source_spectra(band_bayes.results, cpl_bayes.results, flux_unit='erg2/(cm2 s keV)');
 ```
 
 <!-- #region heading_collapsed=true hidden=true -->
