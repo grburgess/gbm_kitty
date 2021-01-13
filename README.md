@@ -25,7 +25,7 @@ Animal cruelty.
 
 ## What can you do?
 
-Assuming you have built a local database (tis possible), just type:
+Assuming you have built a local database (tis possible, see below), just type:
 
 ```bash
 $> get_grb_analysis --grb GRBYYMMDDxxx
@@ -45,6 +45,13 @@ $> get_grb_analysis --grb GRBYYMMDDxxx --run-fit
 ```
 
 <img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/media/fit.gif" alt="drawing" width="800" align="center"/>
+
+
+And your automatic (but mutable) analysis is ready:
+
+<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/media/nb.gif" alt="drawing" width="800" align="center"/>
+
+
 
 
 ## Building the database
