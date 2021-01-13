@@ -40,3 +40,13 @@ If you want to do more, go ahead and fit the spectra:
 $> get_grb_analysis --grb GRBYYMMDDxxx --run-fit
 
 ```
+
+
+## Building the database
+
+The concept behind this is to query the Fermi GBM database for basic trigger info, use this in combination tools such as [gbmgeometry](https://gbmgeometry.readthedocs.io/en/latest/) to figure out which detectors produce the best data for each GRB, and then figure out preliminary selections / parameters / setups for subsequent analysis. 
+
+This process starts with launching [luigi](https://luigi.readthedocs.io/en/stable/) which mangages the pipline:
+
+
+<img src="https://raw.githubusercontent.com/grburgess/gbm_kitty/master/logo.png" alt="drawing" width="600" align="center"/>
