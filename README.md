@@ -19,6 +19,8 @@ Database, reduce, and analyze GBM data without having to know anything. Curiosit
 * Heuristic algorithms are applied to search for the background regions in the time series of GBM light curves. 
 * Analysis notebooks can be generated on the fly for both time-instegrated and time-resolved spectral fitting. 
 
+ <p style="color: red;"> Of course, this analysis is highly opinionated.</p>
+
 ## What this is not
 
 Animal cruelty. 
